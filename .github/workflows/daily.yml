@@ -5,7 +5,10 @@ name: Ranking aktualisieren
 # Commit. Von Hand startbar über "Run workflow".
 on:
   schedule:
-    - cron: "15 3 * * *"     # täglich 03:15 UTC
+    # Vorerst nur montags 03:15 UTC (05:15 deutscher Zeit). Der sonntägliche
+    # Lauf ist damit übersprungen. Für den täglichen Rhythmus wieder auf
+    # "15 3 * * *" ändern.
+    - cron: "15 3 * * 1"
   workflow_dispatch:
     inputs:
       nur_veroeffentlichen:
