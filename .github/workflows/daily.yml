@@ -1,0 +1,59 @@
+name: Ranking aktualisieren
+
+# Bewusst KEIN push-Auslöser: ein Fußball-Lauf holt rund 3.500 Tabellen und
+# dauert etwa eine Stunde. Der soll einmal am Tag laufen und nicht bei jedem
+# Commit. Von Hand startbar über "Run workflow".
+on:
+  schedule:
+    - cron: "15 3 * * *"     # täglich 03:15 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  # Nicht abbrechen: ein angefangener Lauf soll zu Ende gehen, sonst bleibt
+  # die Seite auf einem halben Datenstand stehen.
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Handball zuerst, weil schnell -- so steht bei einem Abbruch im
+      # Fußball-Lauf wenigstens ein frischer Handball-Stand.
+      - name: Handball bauen
+        run: python3 build.py --sport handball
+
+      - name: Fußball bauen
+        run: python3 build.py --sport fussball
+
+      # Die Prüfung bricht ab, wenn eine harte Prüfung fehlschlägt -- dann
+      # wird nichts veröffentlicht und der Lauf ist rot.
+      - name: Daten prüfen
+        run: |
+          python3 pruefen.py --sport fussball
+          python3 pruefen.py --sport handball
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
