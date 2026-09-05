@@ -2,3 +2,9 @@ __pycache__/
 *.pyc
 data/cache/
 .DS_Store
+
+# Quellbilder der Header. Im Repo landet nur das verkleinerte JPEG unter
+# docs/; ein unbearbeitetes PNG wiegt rund zwei Megabyte.
+clubrank_*.png
+clubrank_*.jpg
+clubrank_*.jpeg

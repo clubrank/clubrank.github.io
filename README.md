@@ -30,8 +30,27 @@ Sportarten eingebettet wären unbenutzbar. Dadurch ist `index.html` nur 25 KB gr
 Das Suchfeld auf der Startseite springt in die gefilterte Tabelle der gewählten
 Sportart (`#fussball?q=…`); ebenso verstanden werden `?verband=` und `?stufe=`.
 
-**Headerbild einsetzen:** eine Datei `docs/header.jpg` ablegen, empfohlen 2000 × 700 px.
-Der gestrichelte Platzhalter verschwindet dann von selbst.
+**Headerbilder einsetzen.** Es gibt eines je Sportart und eines für die Startseite.
+Bild in den Projektordner legen und das Skript aufrufen:
+
+```bash
+python3 bilder.py
+```
+
+| Datei im Projektordner | wird zu | erscheint auf |
+|---|---|---|
+| `clubrank_fußball.png` | `docs/header-fussball.jpg` | `#fussball` |
+| `clubrank_handball.png` | `docs/header-handball.jpg` | `#handball` |
+| `clubrank_basketball.png` | `docs/header-basketball.jpg` | `#basketball` |
+| `clubrank_home.png` | `docs/header.jpg` | Startseite — am besten ein Motiv mit allen Sportarten |
+
+Das Skript bringt die Bilder auf 1800 px Breite und speichert sie als JPEG; aus rund
+1,8 MB PNG werden so etwa 250 KB. Empfohlenes Format 1800 × 870 px. Fehlt ein Bild,
+zeigt die Stelle einen gestrichelten Platzhalter mit dem erwarteten Dateinamen — die
+Seite bleibt also benutzbar.
+
+Die Quell-PNGs sind aus der Versionsverwaltung ausgenommen; im Repository liegt nur
+das verkleinerte JPEG unter `docs/`.
 
 ## Das Problem
 

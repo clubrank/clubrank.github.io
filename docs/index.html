@@ -48,6 +48,9 @@ body{margin:0;background:var(--bg);color:var(--ink);
 .hero{position:relative;margin:18px 0 0;border-radius:16px;overflow:hidden;
   background:linear-gradient(135deg,var(--hero1),var(--hero2));
   min-height:300px;display:flex;align-items:flex-end}
+.hero.klein{min-height:210px;margin-bottom:8px}
+.hero.klein .marke{font-size:clamp(24px,4.5vw,40px)}
+.hero.klein .claim{font-size:clamp(13px,2vw,16px)}
 .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .hero .schleier{position:absolute;inset:0;
   background:linear-gradient(180deg,rgba(0,0,0,.15) 0%,rgba(0,0,0,.72) 100%)}
@@ -235,8 +238,9 @@ footer a{color:var(--accent)}
          onload="document.getElementById('platzhalter').remove()"
          onerror="this.remove()">
     <div class="schleier"></div>
-    <div class="platzhalter" id="platzhalter"><em>Platzhalter für das Headerbild —
-      Datei <code>docs/header.jpg</code> ablegen, empfohlen 2000 × 700 px</em></div>
+    <div class="platzhalter" id="platzhalter"><em>Platzhalter für das Startbild —
+      am besten eines mit allen Sportarten.<br>Datei <code>docs/header.jpg</code>
+      ablegen, empfohlen 1800 × 870 px</em></div>
     <div class="inhalt">
       <h1 class="marke">FCR <span>Deutschland</span></h1>
       <p class="claim">Dein Club-Ranking — wo steht dein Verein?</p>
@@ -272,8 +276,19 @@ footer a{color:var(--accent)}
 
 <!-- ========================= Ansicht Sportart ========================= -->
 <section id="view-sport" hidden>
-  <h2 id="sportTitel"></h2>
-  <p class="unter" id="sportUnter"></p>
+  <!-- Headerbild je Sportart: eine Datei docs/header-<sport>.jpg ablegen,
+       dann verschwindet der Platzhalter von selbst. -->
+  <div class="hero klein">
+    <img id="sportBild" alt="">
+    <div class="schleier"></div>
+    <div class="platzhalter" id="sportPlatzhalter"><em>Platzhalter für das
+      Headerbild dieser Sportart<br>Datei <code id="sportBildName"></code>
+      ablegen, empfohlen 1800 × 870 px</em></div>
+    <div class="inhalt">
+      <h1 class="marke" id="sportTitel"></h1>
+      <p class="claim" id="sportUnter"></p>
+    </div>
+  </div>
   <div id="sportInhalt"><div class="laden">Daten werden geladen …</div></div>
 </section>
 
@@ -366,6 +381,17 @@ async function route(){
   document.getElementById('sportTitel').textContent = `${sport.icon} ${sport.name}`;
   document.getElementById('sportUnter').textContent = sport.ready
     ? `Saison ${sport.season} · Stand ${sport.generated}` : '';
+
+  // Kopfbild der Sportart. Fehlt die Datei, bleibt der Verlauf mit Platzhalter.
+  const bild = document.getElementById('sportBild');
+  const platz = document.getElementById('sportPlatzhalter');
+  const datei = `header-${sport.slug}.jpg`;
+  document.getElementById('sportBildName').textContent = `docs/${datei}`;
+  platz.hidden = false;
+  bild.hidden = true;
+  bild.onload = () => { platz.hidden = true; bild.hidden = false; };
+  bild.onerror = () => { bild.hidden = true; platz.hidden = false; };
+  bild.src = datei;
   if (!sport.ready){
     document.getElementById('sportInhalt').innerHTML =
       `<div class="note"><p>${esc(sport.hinweis || 'Diese Sportart ist noch in Arbeit.')}</p></div>`;
