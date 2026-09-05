@@ -1,6 +1,6 @@
 staffel_id,verband,gebiet,ligastufe,spielklasse,staffel,mannschaften,spiele_gesamt,tore_gesamt,punkte_gesamt,tabellenfuehrer,tabellenfuehrer_punkte,quelle
-hbl-248,,,1,1. Handball-Bundesliga,1. Handball-Bundesliga,18,18,1108,36,THW Kiel,4,fussball.de
-hbl-254,,,2,2. Handball-Bundesliga,2. Handball-Bundesliga,18,12,733,24,TuS Ferndorf,4,fussball.de
+hbl-248,,,1,1. Handball-Bundesliga,1. Handball-Bundesliga,18,22,1352,44,SG Flensburg-Handewitt,6,fussball.de
+hbl-254,,,2,2. Handball-Bundesliga,2. Handball-Bundesliga,18,15,922,30,VfL Lübeck-Schwartau,4,fussball.de
 14054,Deutscher Handballbund,Deutscher Handballbund,3,3. Liga,Nord-Ost,16,8,497,16,HC Empor Rostock,2,fussball.de
 14053,Deutscher Handballbund,Deutscher Handballbund,3,3. Liga,Nord-West,16,8,503,16,VFL Fredenbeck,2,fussball.de
 14056,Deutscher Handballbund,Deutscher Handballbund,3,3. Liga,Süd,16,8,471,16,SG Pforzheim/Eutingen,3,fussball.de
@@ -9,12 +9,12 @@ hbl-254,,,2,2. Handball-Bundesliga,2. Handball-Bundesliga,18,12,733,24,TuS Fernd
 13540,Handballregion-Nord,Handballregion-Nord,4,Regionalliga,Meisterrunde,14,4,222,8,TSV Ellerbek,2,fussball.de
 12649,Handballverband Westfalen,Handballverband Westfalen,4,Regionalliga,HVW Männer Regionalliga,14,0,0,0,Allgemeiner Sportverein Hamm-Westfalen e.V. II,0,fussball.de
 13248,REGIONALLIGA SüDWEST,REGIONALLIGA SüDWEST,4,Regionalliga,RLSW-M,14,5,284,10,TV Homburg 1,2,fussball.de
-12373,Hamburger Handballverband,Hamburger Handballverband,5,Oberliga,Oberliga Männer (100),14,0,0,0,1. HC Quickborn,0,fussball.de
+12373,Hamburger Handballverband,Hamburger Handballverband,5,Oberliga,Oberliga Männer (100),14,1,62,2,TH Eilbeck,2,fussball.de
 17158,Hamburger Handballverband,Hamburger Handballverband,5,Oberliga,Oberliga Senioren (300),6,0,0,0,AMTV Hamburg Ü40,0,fussball.de
 12904,Handball Nordrhein,Handball Nordrhein,5,Oberliga,Oberliga Männer Gr. 1,14,0,0,0,1.Fc KÖLN,0,fussball.de
 12905,Handball Nordrhein,Handball Nordrhein,5,Oberliga,Oberliga Männer Gr. 2,14,0,0,0,Bergische Panther II,0,fussball.de
 12906,Handball Nordrhein,Handball Nordrhein,5,Oberliga,Oberliga Männer Gr. 3,14,0,0,0,ASV Süchteln 1M,0,fussball.de
-12401,Handballverband Rheinhessen-Pfalz,Handballverband Rheinhessen-Pfalz,5,Oberliga,M-OL,12,3,159,6,HLZ Friesenheim/Hochdorf 3,2,fussball.de
+12401,Handballverband Rheinhessen-Pfalz,Handballverband Rheinhessen-Pfalz,5,Oberliga,M-OL,12,4,221,8,TV Offenbach,2,fussball.de
 12820,Handballverband Rheinland,Handballverband Rheinland,5,Oberliga,Oberliga Männer · Handballverband Rheinland,12,0,0,0,DJK/MJC Trier,0,fussball.de
 14368,Handballverband SAAR,Handballverband SAAR,5,Oberliga,Oberliga Männer,13,0,0,0,DJK Marpingen,0,fussball.de
 12542,Handballverband Sachsen,Handballverband Sachsen,5,Oberliga,OLS MÄNNER,12,0,0,0,BSV Limbach-O.,0,fussball.de
@@ -78,7 +78,7 @@ hbl-254,,,2,2. Handball-Bundesliga,2. Handball-Bundesliga,18,12,733,24,TuS Fernd
 15675,HK Krefeld-Grenzland,HK Krefeld-Grenzland,9,Bezirksliga / Kreisliga / Regionsliga,BL Männer,14,1,0,2,Handball Oppum III,1,fussball.de
 12889,HK Köln-Rheinberg,HK Köln-Rheinberg,9,Bezirksliga / Kreisliga / Regionsliga,Regionsliga Männer · HK Köln-Rheinberg,14,0,0,0,Brühler TV II,0,fussball.de
 12960,HK Oberberg,HK Oberberg,9,Bezirksliga / Kreisliga / Regionsliga,Regionsliga Männer · HK Oberberg,8,0,0,0,Blue-White-Dynamite VfL Gummersbach e.V.,0,fussball.de
-13017,HK Rhein-Ruhr,HK Rhein-Ruhr,9,Bezirksliga / Kreisliga / Regionsliga,REGIONSLIGA MÄNNER,12,1,0,2,SV Heissen II,1,fussball.de
+13017,HK Rhein-Ruhr,HK Rhein-Ruhr,9,Bezirksliga / Kreisliga / Regionsliga,REGIONSLIGA MÄNNER,12,0,0,0,Alstadener TUS III,0,fussball.de
 13065,HK Wesel,HK Wesel,9,Bezirksliga / Kreisliga / Regionsliga,Regionsliga Männer,9,0,0,0,HC TV Rhede III,0,fussball.de
 13116,HR Leipzig,HR Leipzig,9,Bezirksliga / Kreisliga / Regionsliga,RL Männer · HR Leipzig,12,0,0,0,Bornaer HV 09,0,fussball.de
 13110,HR Ostsachsen,HR Ostsachsen,9,Bezirksliga / Kreisliga / Regionsliga,RL Männer · HR Ostsachsen,10,0,0,0,HSV 1923 Pulsnitz III,0,fussball.de
@@ -110,7 +110,7 @@ hbl-254,,,2,2. Handball-Bundesliga,2. Handball-Bundesliga,18,12,733,24,TuS Fernd
 12486,Handballverband Rheinhessen-Pfalz,Handballverband Rheinhessen-Pfalz,9,Bezirksliga / Kreisliga / Regionsliga,M-BZL 1,12,2,123,4,SF Budenheim 3,2,fussball.de
 12487,Handballverband Rheinhessen-Pfalz,Handballverband Rheinhessen-Pfalz,9,Bezirksliga / Kreisliga / Regionsliga,M-BZL 2,12,4,224,8,TV 03 Wörth 2,2,fussball.de
 14382,Handballverband SAAR,Handballverband SAAR,9,Bezirksliga / Kreisliga / Regionsliga,Bezirksliga Männer,13,0,0,0,DJK Marpingen 2,0,fussball.de
-12671,KÜS Ostwestfalenlippe,KÜS Ostwestfalenlippe,9,Bezirksliga / Kreisliga / Regionsliga,OWL Männer Bezirksliga Staffel 1,14,0,0,0,HCE BAD Oeynhausen,0,fussball.de
+12671,KÜS Ostwestfalenlippe,KÜS Ostwestfalenlippe,9,Bezirksliga / Kreisliga / Regionsliga,OWL Männer Bezirksliga Staffel 1,14,1,53,2,VFL Handball Mennighüffen II,2,fussball.de
 12672,KÜS Ostwestfalenlippe,KÜS Ostwestfalenlippe,9,Bezirksliga / Kreisliga / Regionsliga,OWL Männer Bezirksliga Staffel 2,14,0,0,0,HSG Altenbeken/Buke,0,fussball.de
 14548,Mosel/Eifel-Nahe/Hunsrück,Mosel/Eifel-Nahe/Hunsrück,9,Bezirksliga / Kreisliga / Regionsliga,Bezirksliga Männer Mosel/Eifel-Nahe/Hunsrück,5,0,0,0,DJK St. Matthias Trier II,0,fussball.de
 15020,Rhein/Westerwald,Rhein/Westerwald,9,Bezirksliga / Kreisliga / Regionsliga,Bezirksliga Männer Rhein/Westerwald,8,0,0,0,DJK Betzdorf,0,fussball.de
@@ -135,7 +135,7 @@ hbl-254,,,2,2. Handball-Bundesliga,2. Handball-Bundesliga,18,12,733,24,TuS Fernd
 13446,Hamburger Handballverband,Hamburger Handballverband,10,Bezirksklasse / Kreisklasse / Regionsklasse,Kreisklasse Männer Gruppe 2 (152),7,0,0,0,Ahrensburger TSV III,0,fussball.de
 12988,Handball-Erwachsene DER Kreishandballverbände IN Schleswig-Holstein,Handball-Erwachsene DER Kreishandballverbände IN Schleswig-Holstein,10,Bezirksklasse / Kreisklasse / Regionsklasse,Kreisklasse Männer Kiel/RD,9,0,0,0,Büdelsdorfer TSV,0,fussball.de
 12990,Handball-Erwachsene DER Kreishandballverbände IN Schleswig-Holstein,Handball-Erwachsene DER Kreishandballverbände IN Schleswig-Holstein,10,Bezirksklasse / Kreisklasse / Regionsklasse,Kreisklasse Männer LauSto,8,0,0,0,Boizenburger HV,0,fussball.de
-12985,Handball-Erwachsene DER Kreishandballverbände IN Schleswig-Holstein,Handball-Erwachsene DER Kreishandballverbände IN Schleswig-Holstein,10,Bezirksklasse / Kreisklasse / Regionsklasse,Kreisklasse Männer Nord A,10,0,0,0,Bredstedter TSV II,0,fussball.de
+12985,Handball-Erwachsene DER Kreishandballverbände IN Schleswig-Holstein,Handball-Erwachsene DER Kreishandballverbände IN Schleswig-Holstein,10,Bezirksklasse / Kreisklasse / Regionsklasse,Kreisklasse Männer Nord A,10,1,49,2,HSG Angeln II,2,fussball.de
 12986,Handball-Erwachsene DER Kreishandballverbände IN Schleswig-Holstein,Handball-Erwachsene DER Kreishandballverbände IN Schleswig-Holstein,10,Bezirksklasse / Kreisklasse / Regionsklasse,Kreisklasse Männer Nord B,9,0,0,0,HSG Nordau IV,0,fussball.de
 12989,Handball-Erwachsene DER Kreishandballverbände IN Schleswig-Holstein,Handball-Erwachsene DER Kreishandballverbände IN Schleswig-Holstein,10,Bezirksklasse / Kreisklasse / Regionsklasse,Kreisklasse Männer Ostsee,9,0,0,0,Eichholzer SV,0,fussball.de
 12987,Handball-Erwachsene DER Kreishandballverbände IN Schleswig-Holstein,Handball-Erwachsene DER Kreishandballverbände IN Schleswig-Holstein,10,Bezirksklasse / Kreisklasse / Regionsklasse,Kreisklasse Männer Plön,9,1,59,2,TSV Schönberg II,2,fussball.de

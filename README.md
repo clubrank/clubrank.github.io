@@ -1,4 +1,4 @@
-# FCR Deutschland — dein Club-Ranking
+# ClubRank — wo steht dein Verein?
 
 **→ [clubrank.github.io](https://clubrank.github.io/)**
 

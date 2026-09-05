@@ -22,8 +22,8 @@ TEMPLATE = """<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FCR Deutschland — dein Club-Ranking</title>
-<meta name="description" content="Fußball, Handball und Basketball: alle deutschen Vereine von der Bundesliga bis zur Kreisklasse in einer Rangfolge. Wo steht dein Verein?">
+<title>ClubRank — wo steht dein Verein?</title>
+<meta name="description" content="ClubRank: alle deutschen Vereine in Fußball, Handball und Basketball — von der Bundesliga bis zur Kreisklasse in einer einzigen Rangfolge. Wo steht dein Verein?">
 <style>
 :root{
   --bg:#f6f7f9; --panel:#ffffff; --line:#e3e6ea; --ink:#14171c; --muted:#666e79;
@@ -123,6 +123,13 @@ h2 + p.unter{margin:0 0 18px;color:var(--muted);font-size:15px}
 .karte .liga{font-size:13px;color:var(--muted)}
 .karte .erklaerung{font-size:13px;color:var(--muted);margin-top:4px;
   padding-top:10px;border-top:1px solid var(--line)}
+.topknopf{margin-top:10px;align-self:flex-start;font-size:13px;font-weight:700;
+  color:var(--accent);text-decoration:none;padding:6px 12px;border-radius:8px;
+  border:1px solid var(--accent)}
+.topknopf:hover{background:var(--accent-soft)}
+.zurueckknopf{display:inline-block;margin:0 0 14px;font-size:14px;font-weight:600;
+  color:var(--accent);text-decoration:none}
+.zurueckknopf:hover{text-decoration:underline}
 
 .note{background:var(--panel);border:1px solid var(--line);
   border-left:3px solid #8a6100;border-radius:8px;padding:12px 14px;
@@ -169,26 +176,32 @@ td.delta{width:56px;font-size:13px}
 .laden{padding:40px;text-align:center;color:var(--muted)}
 __TIER_CSS__
 tbody tr:hover{background:var(--accent-soft)}
+/* Diese Regeln gelten nur für die Haupttabelle -- die Top-100-Listen haben
+   eine andere Spaltenfolge und würden sonst ihre Wertespalte verlieren. */
 @media (max-width:1100px){
-  th:nth-child(5),td:nth-child(5),th:nth-child(7),td:nth-child(7),
-  th:nth-child(8),td:nth-child(8),th:nth-child(9),td:nth-child(9){display:none}
+  .haupt th:nth-child(5),.haupt td:nth-child(5),
+  .haupt th:nth-child(7),.haupt td:nth-child(7),
+  .haupt th:nth-child(8),.haupt td:nth-child(8),
+  .haupt th:nth-child(9),.haupt td:nth-child(9){display:none}
   .club span{max-width:130px}
   .league{max-width:150px}
 }
 @media (max-width:860px){
-  th:nth-child(2),td:nth-child(2),th:nth-child(10),td:nth-child(10),
-  th:nth-child(11),td:nth-child(11),th:nth-child(12),td:nth-child(12){display:none}
+  .haupt th:nth-child(2),.haupt td:nth-child(2),
+  .haupt th:nth-child(10),.haupt td:nth-child(10),
+  .haupt th:nth-child(11),.haupt td:nth-child(11),
+  .haupt th:nth-child(12),.haupt td:nth-child(12){display:none}
   th,td{padding:8px 6px;white-space:normal}
   .club span,.league{max-width:none;white-space:normal;overflow:visible;
     text-overflow:clip;display:inline;min-width:0}
   .club{align-items:flex-start}
   table{table-layout:fixed}
-  th:nth-child(1),td:nth-child(1){width:11%}
-  th:nth-child(3),td:nth-child(3){width:41%}
-  th:nth-child(4),td:nth-child(4){width:25%}
-  th:nth-child(6),td:nth-child(6){width:9%}
-  th:nth-child(13),td:nth-child(13){width:14%}
-  td:nth-child(3),td:nth-child(4){overflow-wrap:break-word;hyphens:auto}
+  .haupt th:nth-child(1),.haupt td:nth-child(1){width:11%}
+  .haupt th:nth-child(3),.haupt td:nth-child(3){width:41%}
+  .haupt th:nth-child(4),.haupt td:nth-child(4){width:25%}
+  .haupt th:nth-child(6),.haupt td:nth-child(6){width:9%}
+  .haupt th:nth-child(13),.haupt td:nth-child(13){width:14%}
+  td:nth-child(2),td:nth-child(3){overflow-wrap:break-word;hyphens:auto}
   td.rank{width:11%}
   .league{font-size:11px}
 }
@@ -200,7 +213,7 @@ footer a{color:var(--accent)}
 <body>
 
 <div class="topbar"><div class="inner">
-  <a class="brand" href="#home">FCR <span>Deutschland</span></a>
+  <a class="brand" href="#home">Club<span>Rank</span></a>
   <nav id="nav"></nav>
 </div></div>
 
@@ -219,8 +232,8 @@ footer a{color:var(--accent)}
       am besten eines mit allen Sportarten.<br>Datei <code>docs/header.jpg</code>
       ablegen, empfohlen 1800 × 870 px</em></div>
     <div class="inhalt">
-      <h1 class="marke">FCR <span>Deutschland</span></h1>
-      <p class="claim">Dein Club-Ranking — wo steht dein Verein?</p>
+      <h1 class="marke">Club<span>Rank</span></h1>
+      <p class="claim">Jeder Verein. Jede Liga. Eine Rangfolge. Wo steht deiner?</p>
     </div>
   </div>
 
@@ -277,7 +290,9 @@ footer a{color:var(--accent)}
   <p class="unter">Quer zur Tabelle gelesen — ohne Rücksicht darauf, in welcher Liga jemand spielt.</p>
   <div class="karten" id="karten"></div>
 
-  <h2>Die komplette Tabelle</h2>
+  <div id="topBereich" hidden></div>
+
+  <h2 id="tabellenTitel">Die komplette Tabelle</h2>
   <p class="unter" id="tabellenUnter"></p>
   <div class="controls">
     <input type="search" id="q" placeholder="Verein suchen …" autocomplete="off">
@@ -289,7 +304,7 @@ footer a{color:var(--accent)}
   <div class="legend" id="legend"></div>
   <p class="count" id="zaehler"></p>
   <div class="tablewrap">
-    <table>
+    <table class="haupt">
       <thead><tr>
         <th>#</th><th title="Veränderung gegenüber der Vorwoche">± Wo.</th>
         <th>Verein</th><th>Liga</th><th title="Platz in der eigenen Staffel">Pl.</th>
@@ -389,6 +404,33 @@ async function route(){
 window.addEventListener('hashchange', route);
 
 // --- Eine Sportart darstellen ------------------------------------------
+// Dieselben Kriterien wie bei den Kennzahlen-Karten, damit Karte und
+// Top-100-Liste nie auseinanderlaufen. Sortiert wird immer absteigend nach
+// dem ersten Wert, bei Gleichstand nach dem zweiten.
+const proSpiel = (r, feld) => r.played ? r[feld] / r.played : 0;
+const SORTIERUNG = {
+  bester:       r => [proSpiel(r,'points'), proSpiel(r,'goalDiff')],
+  heiss:        r => [proSpiel(r,'goalDiff'), proSpiel(r,'points')],
+  torfabrik:    r => [proSpiel(r,'goalsFor'), proSpiel(r,'points')],
+  bollwerk:     r => [-proSpiel(r,'goalsAgainst'), proSpiel(r,'points')],
+  schlusslicht: r => [-proSpiel(r,'points'), -proSpiel(r,'goalDiff')],
+  klatsche:     r => [-proSpiel(r,'goalDiff'), -proSpiel(r,'points')],
+  aufsteiger:   r => [r.delta ?? -1e9, 0],
+  absteiger:    r => [-(r.delta ?? 1e9), 0],
+};
+const WERT = {
+  bester:       r => proSpiel(r,'points').toFixed(2),
+  heiss:        r => (proSpiel(r,'goalDiff') >= 0 ? '+' : '') + proSpiel(r,'goalDiff').toFixed(2),
+  torfabrik:    r => proSpiel(r,'goalsFor').toFixed(2),
+  bollwerk:     r => proSpiel(r,'goalsAgainst').toFixed(2),
+  schlusslicht: r => proSpiel(r,'points').toFixed(2),
+  klatsche:     r => (proSpiel(r,'goalDiff') >= 0 ? '+' : '') + proSpiel(r,'goalDiff').toFixed(2),
+  aufsteiger:   r => (r.delta > 0 ? '+' : '') + r.delta,
+  absteiger:    r => (r.delta > 0 ? '+' : '') + r.delta,
+};
+// Bei den Wochenlisten zählt nur, wer überhaupt einen Vorwochenwert hat.
+const NUR_MIT_DELTA = new Set(['aufsteiger', 'absteiger']);
+
 function zeigeSport(sport, d, params){
   const ziel = document.getElementById('sportInhalt');
   ziel.innerHTML = '';
@@ -427,6 +469,7 @@ function zeigeSport(sport, d, params){
       <div class="liga">${esc(k.liga)} · Ligastufe ${k.stufe} · ${esc(k.verband)}
         · Rang ${tausend(k.rang)}</div>
       <div class="erklaerung">${esc(k.erklaerung)}</div>
+      <a class="topknopf" href="#${sport.slug}?top=${k.key}">Zur Top-100 →</a>
     </div>`).join('');
 
   $('sportFuss').innerHTML = sport.fuss || '';
@@ -499,6 +542,50 @@ function zeigeSport(sport, d, params){
     gezeigt = 0; letzteStufe = null; rows.innerHTML = '';
     empty.hidden = gefiltert.length > 0;
     nachladen();
+  }
+
+  // --- Top-100 einer Kennzahl ----------------------------------------
+  const topBereich = $('topBereich');
+  const karte = (d.kennzahlen || []).find(k => k.key === params.get('top'));
+  if (karte){
+    const minSpiele = d.minSpiele || 1;
+    // Bei den Wochenlisten nur, wer sich in die passende Richtung bewegt hat --
+    // sonst stünden unter den "Aufsteigern" am Ende die größten Verlierer.
+    let feld;
+    if (karte.key === 'aufsteiger')      feld = RANKING.filter(r => r.delta > 0);
+    else if (karte.key === 'absteiger')  feld = RANKING.filter(r => r.delta < 0);
+    else                                 feld = RANKING.filter(r => r.played >= minSpiele);
+    feld = feld.slice().sort((a, b) => {
+      const [a1, a2] = SORTIERUNG[karte.key](a), [b1, b2] = SORTIERUNG[karte.key](b);
+      return b1 - a1 || b2 - a2;
+    }).slice(0, 100);
+
+    topBereich.hidden = false;
+    topBereich.innerHTML = `
+      <a class="zurueckknopf" href="#${sport.slug}">← Zurück zu ${esc(sport.name)}</a>
+      <h2>${karte.icon} ${esc(karte.titel)} — ${feld.length < 100
+          ? `alle ${tausend(feld.length)}` : 'Top 100'}</h2>
+      <p class="unter">${esc(karte.erklaerung)}</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>#</th><th>Verein</th><th>Liga</th>
+          <th>Sp</th><th>${esc(karte.spalte)}</th><th>Rang gesamt</th></tr></thead>
+        <tbody>${feld.map((r, i) => `<tr class="t${r.tier}">
+          <td class="rank">${i + 1}</td>
+          <td><div class="club"><span title="${esc(r.name)}">${esc(r.name)}</span></div></td>
+          <td><span class="tier t${r.tier}-fg">${r.tier}</span>
+              <span class="league" title="${esc(r.league)}">${esc(r.league)}</span></td>
+          <td>${r.played}</td>
+          <td><b>${WERT[karte.key](r)}</b></td>
+          <td>${tausend(r.rank)}</td></tr>`).join('')}</tbody>
+      </table></div>`;
+    // Karten und Gesamttabelle treten dahinter zurück.
+    ziel.querySelectorAll('h2, p.unter, #karten, #statKacheln, #noteSlot, .controls, '
+      + '.tip, .legend, .count, .tablewrap').forEach(el => {
+        if (!topBereich.contains(el)) el.hidden = true;
+      });
+    topBereich.querySelectorAll('h2, p.unter, .tablewrap').forEach(el => el.hidden = false);
+    window.scrollTo(0, 0);
+    return;
   }
 
   if (params.get('q')) q.value = params.get('q');

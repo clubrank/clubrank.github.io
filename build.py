@@ -130,7 +130,11 @@ def schreibe_sport(out: Path, slug: str, ranking, leagues, matches,
     (out / "data").mkdir(parents=True, exist_ok=True)
     paket = render.compact(ranking)
     paket["meta"] = meta
-    paket["kennzahlen"] = landing.kennzahlen(ranking)["karten"]
+    zahlen = landing.kennzahlen(ranking)
+    paket["kennzahlen"] = zahlen["karten"]
+    # Die Seite baut die Top-100-Listen selbst; dafür braucht sie dieselbe
+    # Mindestspielzahl, mit der auch die Karten gerechnet wurden.
+    paket["minSpiele"] = zahlen["min_spiele"]
     (out / "data" / f"{slug}.json").write_text(
         json.dumps(paket, ensure_ascii=False, separators=(",", ":")),
         encoding="utf-8")

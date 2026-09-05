@@ -40,7 +40,7 @@ def kennzahlen(ranking: list[dict]) -> dict:
 
     karten = [
         {
-            "icon": "🏆", "titel": "Bester Verein Deutschlands",
+            "icon": "🏆", "titel": "Bester Verein Deutschlands", "key": "bester", "spalte": "Punkte/Spiel",
             "erklaerung": f"Ohne Rücksicht auf die Ligastufe: die meisten Punkte "
                           f"pro Spiel, bei Gleichstand die bessere Tordifferenz "
                           f"pro Spiel. Mindestens {n} Spiele.",
@@ -49,7 +49,7 @@ def kennzahlen(ranking: list[dict]) -> dict:
             "wert": lambda r: f"{_pro_spiel(r, 'points'):.2f} Punkte/Spiel",
         },
         {
-            "icon": "🔥", "titel": "Der heißeste Club",
+            "icon": "🔥", "titel": "Der heißeste Club", "key": "heiss", "spalte": "Tordiff./Spiel",
             "erklaerung": f"Die größte Tordifferenz pro Spiel — wer nicht nur "
                           f"gewinnt, sondern auseinandernimmt. Mindestens {n} Spiele.",
             "team": bester(lambda r: (_pro_spiel(r, "goalDiff"),
@@ -57,34 +57,34 @@ def kennzahlen(ranking: list[dict]) -> dict:
             "wert": lambda r: f"{_pro_spiel(r, 'goalDiff'):+.2f} Tore/Spiel",
         },
         {
-            "icon": "⚽", "titel": "Die Torfabrik",
+            "icon": "⚽", "titel": "Die Torfabrik", "key": "torfabrik", "spalte": "Tore/Spiel",
             "erklaerung": f"Meiste eigene Tore pro Spiel. Mindestens {n} Spiele.",
             "team": bester(lambda r: _pro_spiel(r, "goalsFor")),
             "wert": lambda r: f"{_pro_spiel(r, 'goalsFor'):.2f} Tore/Spiel",
         },
         {
-            "icon": "🧱", "titel": "Das Bollwerk",
+            "icon": "🧱", "titel": "Das Bollwerk", "key": "bollwerk", "spalte": "Gegentore/Spiel",
             "erklaerung": f"Wenigste Gegentore pro Spiel. Mindestens {n} Spiele.",
             "team": bester(lambda r: (-_pro_spiel(r, "goalsAgainst"),
                                       _pro_spiel(r, "points"))),
             "wert": lambda r: f"{_pro_spiel(r, 'goalsAgainst'):.2f} Gegentore/Spiel",
         },
         {
-            "icon": "📈", "titel": "Aufsteiger der Woche",
+            "icon": "📈", "titel": "Aufsteiger der Woche", "key": "aufsteiger", "spalte": "Plätze",
             "erklaerung": "Größter Sprung im bundesweiten Ranking gegenüber der "
                           "Vorwoche. Nur für Ligastufen mit Spieldaten — siehe unten.",
             "team": bester(lambda r: r["delta"], mit_delta),
             "wert": lambda r: f"{r['delta']:+d} Plätze auf Rang {r['rank']}",
         },
         {
-            "icon": "📉", "titel": "Absteiger der Woche",
+            "icon": "📉", "titel": "Absteiger der Woche", "key": "absteiger", "spalte": "Plätze",
             "erklaerung": "Größter Verlust im bundesweiten Ranking gegenüber der "
                           "Vorwoche.",
             "team": bester(lambda r: -r["delta"], mit_delta),
             "wert": lambda r: f"{r['delta']:+d} Plätze auf Rang {r['rank']}",
         },
         {
-            "icon": "🥶", "titel": "Das Schlusslicht",
+            "icon": "🥶", "titel": "Das Schlusslicht", "key": "schlusslicht", "spalte": "Punkte/Spiel",
             "erklaerung": f"Die schwächste Punkteausbeute des Landes. "
                           f"Mindestens {n} Spiele.",
             "team": bester(lambda r: (-_pro_spiel(r, "points"),
@@ -92,7 +92,7 @@ def kennzahlen(ranking: list[dict]) -> dict:
             "wert": lambda r: f"{_pro_spiel(r, 'points'):.2f} Punkte/Spiel",
         },
         {
-            "icon": "💥", "titel": "Die dickste Klatsche",
+            "icon": "💥", "titel": "Die dickste Klatsche", "key": "klatsche", "spalte": "Tordiff./Spiel",
             "erklaerung": f"Schlechteste Tordifferenz pro Spiel. "
                           f"Mindestens {n} Spiele.",
             "team": bester(lambda r: (-_pro_spiel(r, "goalDiff"),
@@ -107,7 +107,8 @@ def kennzahlen(ranking: list[dict]) -> dict:
         if not r:
             continue
         fertig.append({
-            "icon": k["icon"], "titel": k["titel"], "erklaerung": k["erklaerung"],
+            "icon": k["icon"], "titel": k["titel"], "key": k["key"],
+            "spalte": k["spalte"], "erklaerung": k["erklaerung"],
             "verein": r["name"], "liga": r["league"], "stufe": r["tier"],
             "verband": r.get("verband") or "überregional",
             "rang": r["rank"], "wert": k["wert"](r),
