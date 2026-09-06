@@ -316,6 +316,7 @@ footer a{color:var(--accent)}
   <div class="karten" id="karten"></div>
 
   <div id="topBereich" hidden></div>
+  <div id="pokalBereich" hidden></div>
 
   <h2 id="tabellenTitel">Die komplette Tabelle</h2>
   <p class="unter" id="tabellenUnter"></p>
@@ -567,6 +568,56 @@ function zeigeSport(sport, d, params){
     gezeigt = 0; letzteStufe = null; rows.innerHTML = '';
     empty.hidden = gefiltert.length > 0;
     nachladen();
+  }
+
+  // --- Sonderauswertung DFB-Pokal -------------------------------------
+  const pokal = d.pokal;
+  const pokalBereich = $('pokalBereich');
+  const paarungsZeile = p => `<tr>
+      <td class="rank">${p.abstand > 0 ? tausend(p.abstand) : 0}</td>
+      <td><div class="club"><span title="${esc(p.heim)}">${esc(p.heim)}</span></div>
+          <span class="league">${esc(p.heimLiga)} · Rang ${tausend(p.heimRang)}</span></td>
+      <td><div class="club"><span title="${esc(p.gast)}">${esc(p.gast)}</span></div>
+          <span class="league">${esc(p.gastLiga)} · Rang ${tausend(p.gastRang)}</span></td>
+      <td><b class="${p.differenz < 0 ? 'up' : (p.differenz > 0 ? 'down' : 'flat')}">${
+          p.differenz > 0 ? '+' : ''}${tausend(p.differenz)}</b></td>
+    </tr>`;
+
+  if (pokal && params.get('pokal')){
+    topBereich.hidden = false;
+    topBereich.innerHTML = `
+      <a class="zurueckknopf" href="#${sport.slug}">← Zurück zu ${esc(sport.name)}</a>
+      <h2>🏆 DFB-Pokal, ${esc(pokal.runde)} — alle ${pokal.paarungen.length} Paarungen</h2>
+      <p class="unter">Sortiert nach dem Abstand im bundesweiten Ranking. Die
+      Differenz ist aus Sicht der Heimmannschaft gerechnet: <b>Rang Heim −
+      Rang Gast</b>. Negativ heißt, die Heimmannschaft steht besser.</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Abstand</th><th>Heim</th><th>Gast</th><th>Differenz</th></tr></thead>
+        <tbody>${pokal.paarungen.map(paarungsZeile).join('')}</tbody>
+      </table></div>`;
+    ziel.querySelectorAll('h2, p.unter, #karten, #statKacheln, #noteSlot, .controls, '
+      + '.tip, .legend, .count, .tablewrap, #pokalBereich').forEach(el => {
+        if (!topBereich.contains(el)) el.hidden = true;
+      });
+    topBereich.querySelectorAll('h2, p.unter, .tablewrap').forEach(el => el.hidden = false);
+    window.scrollTo(0, 0);
+    return;
+  }
+
+  if (pokal){
+    pokalBereich.hidden = false;
+    pokalBereich.innerHTML = `
+      <h2>🏆 Sonderauswertung: DFB-Pokal, ${esc(pokal.runde)}</h2>
+      <p class="unter">Ausgelost für den ${esc(pokal.termin.split('-').reverse().join('.'))}.
+        Wie weit liegen die Gegner im bundesweiten Ranking auseinander?</p>
+      <div class="karten">${pokal.hoehepunkte.map(h => `
+        <div class="karte">
+          <div class="kopf"><i>${h.icon}</i>${esc(h.titel)}</div>
+          <div class="verein">${esc(h.wert)}</div>
+          <div class="liga">${esc(h.text)}</div>
+        </div>`).join('')}</div>
+      <p style="margin:12px 0 0"><a class="topknopf"
+        href="#${sport.slug}?pokal=1">Alle ${pokal.paarungen.length} Paarungen →</a></p>`;
   }
 
   // --- Top-100 einer Kennzahl ----------------------------------------

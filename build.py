@@ -20,8 +20,8 @@ import shutil
 import sys
 from pathlib import Path
 
-from ranking import (fussballde, handballnet, hbl, landing, load, rank,
-                     render, site)
+from ranking import (fussballde, handballnet, hbl, landing, load, pokal,
+                     rank, render, site)
 from ranking.api import OpenLigaDB
 from ranking.leagues import EXPECTED_TIER4, current_season
 
@@ -138,6 +138,17 @@ def schreibe_sport(out: Path, slug: str, ranking, leagues, matches,
     (out / "data" / f"{slug}.json").write_text(
         json.dumps(paket, ensure_ascii=False, separators=(",", ":")),
         encoding="utf-8")
+    if slug == "fussball":
+        # Sonderauswertung DFB-Pokal: die zuletzt ausgeloste Runde mit dem
+        # Rangabstand beider Gegner.
+        sonder = pokal.auswertung(OpenLigaDB(ROOT / "data" / "cache"),
+                                  season, ranking)
+        if sonder:
+            paket["pokal"] = sonder
+            (out / "data" / f"{slug}.json").write_text(
+                json.dumps(paket, ensure_ascii=False, separators=(",", ":")),
+                encoding="utf-8")
+
     render.write_vereine(out, ranking, slug)
     render.write_ligen(out, ranking, slug)
 

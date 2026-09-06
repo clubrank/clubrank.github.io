@@ -45,7 +45,9 @@ def schluessel(name: str) -> str:
     text = text.replace("ß", "ss").replace("ä", "ae").replace("ö", "oe")
     text = text.replace("ü", "ue")
     text = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode()
-    return text.replace("fussball", "fussball")
+    # Angehängte Ziffern erlauben mehrere Anläufe für dasselbe Motiv:
+    # "clubrank_handball2" landet ebenfalls bei header-handball.jpg.
+    return text.rstrip("0123456789 _-")
 
 
 def main() -> int:
@@ -69,10 +71,20 @@ def main() -> int:
                   file=sys.stderr)
             continue
         ziel = DOCS / ziel_name
-        ergebnis = subprocess.run(
-            ["sips", "-s", "format", "jpeg", "-s", "formatOptions", str(QUALITAET),
-             "--resampleWidth", str(BREITE), str(quelle), "--out", str(ziel)],
-            capture_output=True, text=True)
+        # Nur verkleinern, nie vergrößern -- Hochskalieren macht das Bild
+        # weich, ohne einen einzigen Bildpunkt hinzuzugewinnen.
+        befehl = ["sips", "-s", "format", "jpeg",
+                  "-s", "formatOptions", str(QUALITAET)]
+        try:
+            breite_quelle = int(subprocess.run(
+                ["sips", "-g", "pixelWidth", str(quelle)],
+                capture_output=True, text=True).stdout.split(":")[-1].strip())
+        except (ValueError, IndexError):
+            breite_quelle = 0
+        if breite_quelle > BREITE:
+            befehl += ["--resampleWidth", str(BREITE)]
+        befehl += [str(quelle), "--out", str(ziel)]
+        ergebnis = subprocess.run(befehl, capture_output=True, text=True)
         if ergebnis.returncode != 0 or not ziel.exists():
             print(f"  !  {quelle.name}: {ergebnis.stderr.strip()[:120]}", file=sys.stderr)
             fehler += 1
