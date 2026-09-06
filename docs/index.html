@@ -162,7 +162,15 @@ th,td{padding:9px 10px;text-align:right;border-bottom:1px solid var(--line);
 th{position:sticky;top:47px;z-index:3;background:var(--panel);font-size:11px;
   text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;
   box-shadow:inset 0 -1px 0 var(--line)}
-th:nth-child(3),td:nth-child(3),th:nth-child(4),td:nth-child(4){text-align:left}
+.haupt th:nth-child(3),.haupt td:nth-child(3),
+.haupt th:nth-child(4),.haupt td:nth-child(4){text-align:left}
+.paarungen th:nth-child(2),.paarungen td:nth-child(2),
+.paarungen th:nth-child(3),.paarungen td:nth-child(3){text-align:left}
+.paarungen td:nth-child(2),.paarungen td:nth-child(3){padding-top:10px;padding-bottom:10px}
+.paarungen .league{max-width:none;display:block;margin-top:2px}
+/* In der Paarungstabelle ist Platz -- Vereinsnamen dürfen ausgeschrieben
+   stehen, anders als in der 13-spaltigen Haupttabelle. */
+.paarungen .club span{max-width:none;white-space:normal}
 td.rank{font-weight:700;width:52px}
 td.delta{width:56px;font-size:13px}
 .club{display:flex;align-items:center;gap:9px;min-width:0}
@@ -588,6 +596,10 @@ function zeigeSport(sport, d, params){
     nachladen();
   }
 
+  // Wird von beiden Sonderansichten gebraucht -- muss deshalb vor ihnen
+  // deklariert sein, sonst greift die temporale Todeszone von const zu.
+  const topBereich = $('topBereich');
+
   // --- Sonderauswertung DFB-Pokal -------------------------------------
   const pokal = d.pokal;
   const pokalBereich = $('pokalBereich');
@@ -609,7 +621,7 @@ function zeigeSport(sport, d, params){
       <p class="unter">Sortiert nach dem Abstand im bundesweiten Ranking. Die
       Differenz ist aus Sicht der Heimmannschaft gerechnet: <b>Rang Heim −
       Rang Gast</b>. Negativ heißt, die Heimmannschaft steht besser.</p>
-      <div class="tablewrap"><table>
+      <div class="tablewrap"><table class="paarungen">
         <thead><tr><th>Abstand</th><th>Heim</th><th>Gast</th><th>Differenz</th></tr></thead>
         <tbody>${pokal.paarungen.map(paarungsZeile).join('')}</tbody>
       </table></div>`;
@@ -639,7 +651,6 @@ function zeigeSport(sport, d, params){
   }
 
   // --- Top-100 einer Kennzahl ----------------------------------------
-  const topBereich = $('topBereich');
   const karte = (d.kennzahlen || []).find(k => k.key === params.get('top'));
   if (karte){
     const minSpiele = d.minSpiele || 1;
