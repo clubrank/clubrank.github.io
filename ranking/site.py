@@ -14,8 +14,13 @@ wirklich angesehen wird.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
+
+# Für die Teilen-Vorschau braucht es vollständige Adressen -- relative Pfade
+# lösen Messenger nicht auf.
+BASIS_URL = "https://clubrank.github.io/"
 
 TEMPLATE = """<!doctype html>
 <html lang="de">
@@ -24,6 +29,26 @@ TEMPLATE = """<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ClubRank — wo steht dein Verein?</title>
 <meta name="description" content="ClubRank: alle deutschen Vereine in Fußball, Handball und Basketball — von der Bundesliga bis zur Kreisklasse in einer einzigen Rangfolge. Wo steht dein Verein?">
+<link rel="canonical" href="__URL__">
+
+<!-- Vorschau beim Teilen. Ohne diese Angaben raten Messenger, was Titel und
+     Bild sein sollen -- mit ihnen erscheint eine saubere Karte mit Marke,
+     Beschreibung und Startbild. Das Bild braucht eine vollständige Adresse,
+     relative Pfade werden hier nicht aufgelöst. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ClubRank">
+<meta property="og:locale" content="de_DE">
+<meta property="og:url" content="__URL__">
+<meta property="og:title" content="ClubRank — wo steht dein Verein?">
+<meta property="og:description" content="Jeder Verein. Jede Liga. Eine Rangfolge. Fußball, Handball und Basketball von der Bundesliga bis zur Kreisklasse — täglich neu aus den Ergebnissen der laufenden Saison.">
+<meta property="og:image" content="__URL__header.jpg?v=__BILDVERSION__">
+<meta property="og:image:width" content="__BILDBREITE__">
+<meta property="og:image:height" content="__BILDHOEHE__">
+<meta property="og:image:alt" content="Jubelnde Mannschaft eines Amateurvereins nach dem Sieg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ClubRank — wo steht dein Verein?">
+<meta name="twitter:description" content="Jeder Verein. Jede Liga. Eine Rangfolge. Von der Bundesliga bis zur Kreisklasse.">
+<meta name="twitter:image" content="__URL__header.jpg?v=__BILDVERSION__">
 <style>
 :root{
   --bg:#f6f7f9; --panel:#ffffff; --line:#e3e6ea; --ink:#14171c; --muted:#666e79;
@@ -629,7 +654,27 @@ def _tier_css(max_tier: int = 14) -> str:
 
 def write_shell(out_dir: Path, sports: list[dict]) -> None:
     """Schreibt index.html. Die Daten je Sportart liegen in data/<slug>.json."""
+    # Kennung des Startbilds, damit Messenger eine neue Vorschau holen, wenn
+    # sich das Bild ändert -- sie zwischenspeichern sonst tagelang.
+    bild = out_dir / "header.jpg"
+    version, breite, hoehe = "0", "1200", "630"
+    if bild.exists():
+        version = hashlib.sha1(bild.read_bytes()).hexdigest()[:8]
+        try:
+            from PIL import Image
+            with Image.open(bild) as im:
+                breite, hoehe = str(im.size[0]), str(im.size[1])
+        except Exception:
+            pass
+
     html = TEMPLATE
-    html = html.replace("__TIER_CSS__", _tier_css())
-    html = html.replace("__SPORTS__", json.dumps(sports, ensure_ascii=False))
+    for schluessel, wert in {
+        "__TIER_CSS__": _tier_css(),
+        "__SPORTS__": json.dumps(sports, ensure_ascii=False),
+        "__URL__": BASIS_URL,
+        "__BILDVERSION__": version,
+        "__BILDBREITE__": breite,
+        "__BILDHOEHE__": hoehe,
+    }.items():
+        html = html.replace(schluessel, wert)
     (out_dir / "index.html").write_text(html, encoding="utf-8")
